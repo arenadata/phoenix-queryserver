@@ -111,6 +111,12 @@
       <artifactId>phoenix-core</artifactId>
       <scope>test</scope>
       <classifier>tests</classifier>
+      <exclusions>
+        <exclusion>
+          <groupId>org.glassfish</groupId>
+          <artifactId>javax.el</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.phoenix</groupId>
@@ -137,17 +143,35 @@
       <artifactId>hbase-it</artifactId>
       <type>test-jar</type>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.glassfish</groupId>
+          <artifactId>javax.el</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.hbase</groupId>
       <artifactId>hbase-server</artifactId>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.glassfish</groupId>
+          <artifactId>javax.el</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.hbase</groupId>
       <artifactId>hbase-server</artifactId>
       <type>test-jar</type>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.glassfish</groupId>
+          <artifactId>javax.el</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.hbase</groupId>
@@ -159,6 +183,12 @@
       <groupId>org.apache.hbase</groupId>
       <artifactId>hbase-testing-util</artifactId>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.glassfish</groupId>
+          <artifactId>javax.el</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
