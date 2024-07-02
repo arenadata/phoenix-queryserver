@@ -89,6 +89,7 @@
         <avatica.version>1.25.0</avatica.version>
         <servlet.api.version>3.1.0</servlet.api.version>
         <jsr305.version>3.0.0</jsr305.version>
+        <log4j2.version>2.19.0</log4j2.version>
 
         <!-- Test Dependency versions -->
         <mockito-all.version>1.8.5</mockito-all.version>
@@ -239,6 +240,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <configuration>
+                        <source>1.8</source>
                         <quiet>true</quiet>
                         <links>
                             <link>http://hbase.apache.org/apidocs/</link>
@@ -689,6 +691,16 @@
                 <artifactId>bcprov-jdk15</artifactId>
                 <version>140</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
