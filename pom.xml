@@ -71,7 +71,7 @@
         <phoenix.version>5.2.0</phoenix.version>
 
         <!-- Hadoop/Hbase Versions -->
-        <hbase.version>2.5.8</hbase.version>
+        <hbase.version>2.5.10</hbase.version>
         <hadoop.version>3.3.6</hadoop.version>
         <phoenix.client.artifactid>phoenix-client-embedded-hbase-2.5</phoenix.client.artifactid>
 
