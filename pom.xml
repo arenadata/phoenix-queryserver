@@ -31,7 +31,7 @@
 
     <groupId>org.apache.phoenix</groupId>
     <artifactId>phoenix-queryserver-parent</artifactId>
-    <version>6.0.1-SNAPSHOT</version>
+    <version>6.0.0</version>
     <packaging>pom</packaging>
     <name>Phoenix Query Server Maven Parent Project</name>
 
@@ -74,7 +74,7 @@
         <!-- Hadoop/Hbase Versions -->
         <hbase.version>2.6.3-hadoop3</hbase.version>
         <hadoop.version>3.3.6</hadoop.version>
-        <phoenix.client.artifactid>phoenix-client-embedded-hbase-2.5</phoenix.client.artifactid>
+        <phoenix.client.artifactid>phoenix-client-embedded-hbase-2.6</phoenix.client.artifactid>
 
         <!-- Dependency versions -->
         <zookeeper.version>3.8.4</zookeeper.version>
