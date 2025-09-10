@@ -147,7 +147,7 @@ if os.name == 'nt':
 
 # HBase configuration folder path (where hbase-site.xml reside) for
 # HBase/Phoenix client side property override
-hbase_config_path = os.getenv('HBASE_CONF_DIR', phoenix_queryserver_utils.current_dir)
+hbase_config_path = os.getenv('HBASE_CONF_DIR', '/etc/hbase/conf')
 
 serialization = tryDecode(args.serialization) if args.serialization else get_serialization()
 
