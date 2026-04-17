@@ -102,6 +102,10 @@
                     <exclude>META-INF/license/*</exclude>
                     <exclude>LICENSE.*</exclude>
                     <exclude>NOTICE.*</exclude>
+                    <exclude>README.md</exclude>
+                    <exclude>NOTICE</exclude>
+                    <exclude>LICENSE</exclude>
+                    <exclude>LICENSE.txt</exclude>
                   </excludes>
                 </filter>
               </filters>

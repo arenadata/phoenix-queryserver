@@ -64,6 +64,21 @@
         <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/phoenix-queryserver.git</developerConnection>
     </scm>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub arenadata Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/arenadata/phoenix-queryserver</url>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>arenadata</id>
+            <url>https://maven.pkg.github.com/arenadata/*</url>
+        </repository>
+    </repositories>
+
     <properties>
         <!-- General Properties -->
         <top.dir>${project.basedir}</top.dir>
@@ -1244,9 +1259,9 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>bouncycastle</groupId>
-                <artifactId>bcprov-jdk15</artifactId>
-                <version>140</version>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk18on</artifactId>
+                <version>1.82</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>

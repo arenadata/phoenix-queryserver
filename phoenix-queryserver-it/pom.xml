@@ -200,8 +200,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>bouncycastle</groupId>
-      <artifactId>bcprov-jdk15</artifactId>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk18on</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
