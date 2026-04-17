@@ -31,7 +31,7 @@
 
     <groupId>org.apache.phoenix</groupId>
     <artifactId>phoenix-queryserver-parent</artifactId>
-    <version>6.0.0</version>
+    <version>6.0.0.5-4.3.0-0</version>
     <packaging>pom</packaging>
     <name>Phoenix Query Server Maven Parent Project</name>
 
@@ -69,21 +69,21 @@
         <top.dir>${project.basedir}</top.dir>
         <test.tmp.dir>${project.build.directory}</test.tmp.dir>
 
-        <phoenix.version>5.2.2</phoenix.version>
+        <phoenix.version>5.3.0.1-4.3.0-0</phoenix.version>
 
         <!-- Hadoop/Hbase Versions -->
-        <hbase.version>2.6.3-hadoop3</hbase.version>
-        <hadoop.version>3.3.6</hadoop.version>
+        <hbase.version>2.6.5.1-4.3.0-0</hbase.version>
+        <hadoop.version>3.4.3.1-4.3.0-0</hadoop.version>
         <phoenix.client.artifactid>phoenix-client-embedded-hbase-2.6</phoenix.client.artifactid>
 
         <!-- Dependency versions -->
-        <zookeeper.version>3.8.4</zookeeper.version>
+        <zookeeper.version>3.9.5.1-4.3.0-0</zookeeper.version>
         <!-- Curator 4.2.0 supports ZK 3.8 runtime, but TestServer fails to start-->
-        <curator.version>5.6.0</curator.version>
+        <curator.version>5.9.0.1-4.3.0-0</curator.version>
 
         <gson.version>2.10.1</gson.version>
-        <jetty.version>9.4.57.v20241219</jetty.version>
-        <netty-bom.version>4.1.119.Final</netty-bom.version>
+        <jetty.version>9.4.58.v20250814</jetty.version>
+        <netty-bom.version>4.1.131.Final</netty-bom.version>
         <commons-io.version>2.18.0</commons-io.version>
         <sqlline.version>1.9.0</sqlline.version>
         <slf4j.version>1.7.36</slf4j.version>
