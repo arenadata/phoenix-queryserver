@@ -17,7 +17,6 @@
  */
 package org.apache.phoenix.queryserver.server;
 
-import com.google.common.annotations.VisibleForTesting;
 import org.apache.calcite.avatica.Meta;
 import org.apache.calcite.avatica.remote.Driver;
 import org.apache.calcite.avatica.remote.LocalService;
@@ -281,7 +280,7 @@ public final class QueryServer extends Configured implements Tool, Runnable {
     }
   }
 
-  @VisibleForTesting
+  //@VisibleForTesting
   void setTlsIfNeccessary(Builder<Server> builder, Configuration conf) throws Exception {
     final boolean useTls = getConf().getBoolean(QueryServerProperties.QUERY_SERVER_TLS_ENABLED, QueryServerOptions.DEFAULT_QUERY_SERVER_TLS_ENABLED);
     if(useTls) {
