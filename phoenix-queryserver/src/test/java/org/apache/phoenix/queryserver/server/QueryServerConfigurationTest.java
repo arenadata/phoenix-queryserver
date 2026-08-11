@@ -17,9 +17,7 @@
  */
 package org.apache.phoenix.queryserver.server;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.nullable;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -35,6 +33,9 @@ import org.apache.calcite.avatica.server.HttpServer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.security.UserGroupInformation;
+import org.apache.hadoop.security.alias.CredentialProvider;
+import org.apache.hadoop.security.alias.CredentialProviderFactory;
+import org.apache.phoenix.queryserver.QueryServerOptions;
 import org.apache.phoenix.queryserver.QueryServerProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
@@ -84,6 +85,73 @@ public class QueryServerConfigurationTest {
     verify(builder, never()).withSpnego(anyString(), nullable(String[].class));
     verify(builder, never()).withAutomaticLogin(any(File.class));
     verify(builder, never()).withImpersonation(any(DoAsRemoteUserCallback.class));
+  }
+
+  @Test
+  public void testTlsPasswordsResolvedFromCredentialProvider() throws Exception {
+    File jceks = new File(testFolder.toFile(), "pqs.jceks");
+    Configuration conf = HBaseConfiguration.create();
+    conf.set(CredentialProviderFactory.CREDENTIAL_PROVIDER_PATH,
+            "jceks://" + jceks.getAbsolutePath());
+
+    CredentialProvider provider = CredentialProviderFactory.getProviders(conf).get(0);
+    provider.createCredentialEntry(
+            QueryServerProperties.QUERY_SERVER_TLS_KEYSTORE_PASSWORD, "ksSecret".toCharArray());
+    provider.createCredentialEntry(
+            QueryServerProperties.QUERY_SERVER_TLS_TRUSTSTORE_PASSWORD, "tsSecret".toCharArray());
+    provider.flush();
+
+    conf.setBoolean(QueryServerProperties.QUERY_SERVER_TLS_ENABLED, true);
+    conf.set(QueryServerProperties.QUERY_SERVER_TLS_KEYSTORE, jceks.getAbsolutePath());
+    conf.set(QueryServerProperties.QUERY_SERVER_TLS_TRUSTSTORE, jceks.getAbsolutePath());
+
+    QueryServer qs = new QueryServer(new String[0], conf);
+    qs.setTlsIfNeccessary(builder, conf);
+
+    verify(builder).withTLS(
+            any(File.class), eq("ksSecret"),
+            any(File.class), eq("tsSecret"),
+            anyString(),
+            nullable(String[].class),
+            nullable(String[].class));
+  }
+
+  @Test
+  public void testTlsPasswordsFallBackToPlaintextConfig() throws Exception {
+    File dummy = new File(testFolder.toFile(), "dummy.jsk");
+    Configuration conf = HBaseConfiguration.create();
+
+    conf.setBoolean(QueryServerProperties.QUERY_SERVER_TLS_ENABLED, true);
+    conf.set(QueryServerProperties.QUERY_SERVER_TLS_KEYSTORE, dummy.getAbsolutePath());
+    conf.set(QueryServerProperties.QUERY_SERVER_TLS_TRUSTSTORE, dummy.getAbsolutePath());
+    conf.set(QueryServerProperties.QUERY_SERVER_TLS_KEYSTORE_PASSWORD, "ksPlain");
+    conf.set(QueryServerProperties.QUERY_SERVER_TLS_TRUSTSTORE_PASSWORD, "tsPlain");
+
+    QueryServer qs = new QueryServer(new String[0], conf);
+    qs.setTlsIfNeccessary(builder, conf);
+
+    verify(builder).withTLS(
+            any(File.class), eq("ksPlain"),
+            any(File.class), eq("tsPlain"),
+            anyString(), nullable(String[].class), nullable(String[].class));
+  }
+
+  @Test
+  public void testTlsPasswordsUseDefaultsWhenNoProvider() throws Exception {
+    File dummyStore = new File(testFolder.toFile(), "dummy.keystore");
+    Configuration conf = HBaseConfiguration.create();
+
+    conf.setBoolean(QueryServerProperties.QUERY_SERVER_TLS_ENABLED, true);
+    conf.set(QueryServerProperties.QUERY_SERVER_TLS_KEYSTORE,   dummyStore.getAbsolutePath());
+    conf.set(QueryServerProperties.QUERY_SERVER_TLS_TRUSTSTORE, dummyStore.getAbsolutePath());
+
+    QueryServer qs = new QueryServer(new String[0], conf);
+    qs.setTlsIfNeccessary(builder, conf);
+
+    verify(builder).withTLS(
+            any(File.class), eq(QueryServerOptions.DEFAULT_QUERY_SERVER_TLS_KEYSTORE_PASSWORD),
+            any(File.class), eq(QueryServerOptions.DEFAULT_QUERY_SERVER_TLS_TRUSTSTORE_PASSWORD),
+            anyString(), nullable(String[].class), nullable(String[].class));
   }
 
   private void setupKeytabForSpnego() throws IOException {
